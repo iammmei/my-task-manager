@@ -4,32 +4,42 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
+let tasks = [
+  "1. to see all your tasks",
+  "2. to add a task",
+  "3. to delete a task",
+  "4. to mark a task as done",
+  "5. to Exit the task manager",
+];
+
 function taskManagerDisplay() {
   console.log("Welcome to your task manager. Press:");
-  console.log("1. to see all your tasks");
-  console.log("2. to add a task");
-  console.log("3. to delete a task");
-  console.log("4. to mark a task as done");
-  console.log("5. to Exit the task manager");
+  for (let i = 0; i < tasks.length; i++) console.log(tasks[i]);
 }
 
 function SelectChoice(choice) {
   switch (choice) {
     case "1":
-      console.log("You selected option 1: See all tasks");
-
+      taskManagerDisplay();
       break;
     case "2":
-      console.log("You selected option 2: Add a task");
-
+      addNewTask();
       break;
     case "3":
+      console.log("3: Delete a task");
       console.log("You selected option 3: Delete a task");
-
+      rl.question("Enter the index of the task to delete: ", (index) => {
+        index = parseInt(index) - 1;
+        if (index >= 0 && index < tasks.length) {
+          const deletedTask = tasks.splice(index, 1);
+          console.log(`Task "${deletedTask}" deleted successfully!`);
+        } else {
+          console.log("Invalid index!");
+        }
+      });
       break;
     case "4":
-      console.log("You selected option 4: Mark a task as done");
-
+      console.log("4: Mark a task as done");
       break;
     case "5":
       console.log("Exiting the task manager. Goodbye!");
@@ -51,5 +61,17 @@ function printMenuChoice() {
   });
 }
 
+function addNewTask() {
+  rl.question("Enter the new task: ", (task) => {
+    tasks.push(task);
+    for (let i = 0; i < tasks.length; i++) {
+      console.log(`${i + 1}. ${tasks[i]}`);
+    }
+    printMenuChoice();
+  });
+}
+function deleteTask() {
+  for (let i = 0; i < tasks.length; i++) {}
+}
 taskManagerDisplay();
 printMenuChoice();
